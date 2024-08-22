@@ -189,6 +189,7 @@ class ShopTrait(StrEnum):
     WARRIOR = auto()
     WITCHCRAFT = auto()
 
+
 class CardTrait(StrEnum):
     """
     The same as Trait, but the trait images are the one on the card details (when you click on a champion).
@@ -199,7 +200,7 @@ class CardTrait(StrEnum):
     # pylint: disable-next=no-self-argument,redefined-outer-name
     def _generate_next_value_(name, start, count, last_values):
         return helpers.get_resource_path(f"alune/images/card_traits/{name.lower()}.png")
-    
+
     ARCANA = auto()
     BASTION = auto()
     BLASTER = auto()
@@ -223,6 +224,7 @@ class CardTrait(StrEnum):
     VANGUARD = auto()
     WARRIOR = auto()
     WITCHCRAFT = auto()
+
 
 class ClickButton:  # pylint: disable=too-few-public-methods
     """
@@ -304,8 +306,18 @@ class Button:
         click_box=BoundingBox(1155, 595, 1242, 682),
         capture_area=BoundingBox(1128, 568, 1269, 709),
     )
+    sell_champion = ImageButton(BoundingBox(1062, 507, 1230, 550))
 
     # Buttons without an image.
+    bench_slot_one = ClickButton(BoundingBox(240, 645, 240, 645))
+    bench_slot_two = ClickButton(BoundingBox(340, 645, 340, 645))
+    bench_slot_three = ClickButton(BoundingBox(440, 645, 440, 645))
+    bench_slot_four = ClickButton(BoundingBox(540, 645, 540, 645))
+    bench_slot_five = ClickButton(BoundingBox(640, 645, 640, 645))
+    bench_slot_six = ClickButton(BoundingBox(740, 645, 740, 645))
+    bench_slot_seven = ClickButton(BoundingBox(840, 645, 840, 645))
+    bench_slot_eight = ClickButton(BoundingBox(940, 645, 940, 645))
+    bench_slot_nine = ClickButton(BoundingBox(1040, 645, 1040, 645))
     store_card_one = ClickButton(BoundingBox(180, 47, 363, 272))
     store_card_two = ClickButton(BoundingBox(402, 47, 585, 272))
     store_card_three = ClickButton(BoundingBox(624, 47, 807, 272))
@@ -362,6 +374,26 @@ class Button:
             cls.augment_one_roll,
             cls.augment_two_roll,
             cls.augment_three_roll,
+        ]
+
+    @classmethod
+    def get_bench_slots(cls):
+        """
+        Utility method to get all nine bench slots.
+
+        Returns:
+             List of all nine bench slots ClickButtons.
+        """
+        return [
+            cls.bench_slot_one,
+            cls.bench_slot_two,
+            cls.bench_slot_three,
+            cls.bench_slot_four,
+            cls.bench_slot_five,
+            cls.bench_slot_six,
+            cls.bench_slot_seven,
+            cls.bench_slot_eight,
+            cls.bench_slot_nine,
         ]
 
 

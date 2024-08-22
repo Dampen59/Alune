@@ -181,6 +181,71 @@ async def surrender_game(adb_instance: ADB):
     await asyncio.sleep(5)
 
 
+async def is_champion_clicked(screenshot: ndarray) -> bool:
+    """
+    This method check if a champion is currently clicked.
+    It is based on the presence or not of the SELL button.
+
+    Args:
+        screenshot: A screenshot of the game.
+
+    Returns:
+        Whether we have a selected champion.
+    """
+    search_result = screen.get_button_on_screen(image=screenshot, button=Button.sell_champion)
+    if not search_result:
+        return False
+    return True
+
+
+async def clicked_champion_has_config_trait(screenshot: ndarray, config: AluneConfig) -> bool:
+    """
+    Whether the clicked champion has traits specified in config file.
+
+    Args:
+        screenshot: A screenshot of the clicked bench champion.
+        config: An instance of the alune config to use.
+
+    Returns:
+        Whether the champion has one of the trait.
+    """
+    for trait in config.get_shop_traits():
+        find_trait = screen.get_on_screen(
+            image=screenshot,
+            path=helpers.get_resource_path(f"alune/images/card_traits/{trait.name.lower()}.png"),
+            bounding_box=BoundingBox(1015, 0, 1270, 290),
+            precision=0.9,
+        )
+        if not find_trait:
+            continue
+        return True
+    return False
+
+
+async def sell_champions(adb_instance: ADB, config: AluneConfig):
+    """
+    Iterate through the champions on the bench and sell them if they don't have trait specified in config file.
+
+    Args:
+        adb_instance: The adb instance to check and sell the champions.
+        config: An instance of the alune config to use.
+    """
+    bench_slots = Button.get_bench_slots()
+    screenshot = None
+    for slot in bench_slots:
+        await adb_instance.click_button(slot)
+        await asyncio.sleep(0.5)
+        screenshot = await adb_instance.get_screen()
+
+        if not await is_champion_clicked(screenshot):
+            continue
+
+        if not await clicked_champion_has_config_trait(screenshot, config):
+            await adb_instance.click_button(Button.sell_champion)
+
+        await asyncio.sleep(0.5)
+
+
 async def buy_from_shop(adb_instance: ADB, config: AluneConfig):
     """
     Checks the shop for traits and purchases it if found.
@@ -257,6 +322,8 @@ async def take_game_decision(adb_instance: ADB, config: AluneConfig):
         logger.debug("Buying XP")
         await adb_instance.click_button(Button.buy_xp)
         await asyncio.sleep(1)
+
+    await sell_champions(adb_instance, config)
 
     await buy_from_shop(adb_instance, config)
 
