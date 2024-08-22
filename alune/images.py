@@ -199,6 +199,30 @@ class CardTrait(StrEnum):
     # pylint: disable-next=no-self-argument,redefined-outer-name
     def _generate_next_value_(name, start, count, last_values):
         return helpers.get_resource_path(f"alune/images/card_traits/{name.lower()}.png")
+    
+    ARCANA = auto()
+    BASTION = auto()
+    BLASTER = auto()
+    CHRONO = auto()
+    DRAGON = auto()
+    DRUID = auto()
+    ELDRITCH = auto()
+    FAERIE = auto()
+    FROST = auto()
+    HONEYMANCY = auto()
+    HUNTER = auto()
+    INCANTOR = auto()
+    MAGE = auto()
+    MULTISTRIKER = auto()
+    PORTAL = auto()
+    PRESERVER = auto()
+    PYRO = auto()
+    SCHOLAR = auto()
+    SHAPESHIFTER = auto()
+    SUGARCRAFT = auto()
+    VANGUARD = auto()
+    WARRIOR = auto()
+    WITCHCRAFT = auto()
 
 class ClickButton:  # pylint: disable=too-few-public-methods
     """
