@@ -153,7 +153,7 @@ class Trait(StrEnum):
     # noinspection PyMethodParameters
     # pylint: disable-next=no-self-argument,redefined-outer-name
     def _generate_next_value_(name, start, count, last_values):
-        return helpers.get_resource_path(f"alune/images/traits/{name.lower()}.png")
+        return helpers.get_resource_path(f"alune/images/shop_traits/{name.lower()}.png")
 
     @classmethod
     def get_default_traits(cls):
@@ -189,6 +189,16 @@ class Trait(StrEnum):
     WARRIOR = auto()
     WITCHCRAFT = auto()
 
+class CardTrait(StrEnum):
+    """
+    The same as Trait, but the trait images are the one on the card details (when you click on a champion).
+    These will also change with each set.
+    """
+
+    # noinspection PyMethodParameters
+    # pylint: disable-next=no-self-argument,redefined-outer-name
+    def _generate_next_value_(name, start, count, last_values):
+        return helpers.get_resource_path(f"alune/images/card_traits/{name.lower()}.png")
 
 class ClickButton:  # pylint: disable=too-few-public-methods
     """
