@@ -83,7 +83,7 @@ class AluneConfig:
         """
         Sanitize the user configured traits by checking against currently implemented traits.
         """
-        current_traits = [trait.name for trait in list(images.Trait)]
+        current_traits = [trait.name for trait in list(images.ShopTrait)]
         configured_traits = self._config.get("traits", [])
 
         allowed_traits = []
@@ -91,11 +91,11 @@ class AluneConfig:
             if trait.upper() not in current_traits:
                 logger.warning(f"The configured trait '{trait}' does not exist. Skipping it.")
                 continue
-            allowed_traits.append(images.Trait[trait.upper()])
+            allowed_traits.append(images.ShopTrait[trait.upper()])
 
         if len(allowed_traits) == 0:
-            logger.warning(f"No valid traits were configured. Falling back to {images.Trait.get_default_traits()}.")
-            allowed_traits = images.Trait.get_default_traits()
+            logger.warning(f"No valid traits were configured. Falling back to {images.ShopTrait.get_default_traits()}.")
+            allowed_traits = images.ShopTrait.get_default_traits()
 
         self._config["traits"] = allowed_traits
 
@@ -117,7 +117,7 @@ class AluneConfig:
         """
         return self._config.get("adb_port", 5555)
 
-    def get_traits(self) -> list[images.Trait]:
+    def get_shop_traits(self) -> list[images.ShopTrait]:
         """
         Get the list of traits we attempt to purchase.
 

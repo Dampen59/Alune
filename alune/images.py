@@ -144,7 +144,7 @@ class Image(StrEnum):
     PHASE_3_2_FULL = auto()
 
 
-class Trait(StrEnum):
+class ShopTrait(StrEnum):
     """
     The same as ImageEnum, but images are intentionally in a different place and will
     change with each set.

@@ -190,7 +190,7 @@ async def buy_from_shop(adb_instance: ADB, config: AluneConfig):
         config: An instance of the alune config to use.
     """
     screenshot = await adb_instance.get_screen()
-    for trait in config.get_traits():
+    for trait in config.get_shop_traits():
         search_result = screen.get_on_screen(
             image=screenshot,
             path=trait,
